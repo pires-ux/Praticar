@@ -1,0 +1,16 @@
+@Api01_HostAddress = http://localhost:5239
+
+GET {{Api01_HostAddress}}/api/Jogador
+Accept: application/json
+
+###
+POST {{Api01_HostAddress}}/api/Jogador
+Content-Type: Application/json
+
+{
+    "id": 0,
+    "nome": "Adriano",
+    "usuario": "Pires",
+    "email": "adriano@gmail.com",
+    "Senha": "123456"
+}
