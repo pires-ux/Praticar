@@ -30,7 +30,7 @@ namespace Api01.Repository
             _db.SaveChanges();
             var result = _db.jogadores.FirstOrDefault(c => jogador.Email == c.Email);
             if (result != null) _log.LogDebug("erro ao criar jogador");
-            return result;
+            return result!;
 
 
         }
@@ -38,6 +38,11 @@ namespace Api01.Repository
         public Task<Jogadores> Login(LoginDTO login)
         {
             return null;
+        }
+
+        public Task<bool> VerificarEmail(string email)
+        {
+            return _db.jogadores.AnyAsync(c => c.Email == email);
         }
     }
 }

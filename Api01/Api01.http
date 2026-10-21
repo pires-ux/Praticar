@@ -12,5 +12,5 @@ Content-Type: Application/json
     "nome": "Adriano",
     "usuario": "Pires",
     "email": "adriano@gmail.com",
-    "Senha": "123456"
+    "Senha": "1234 "
 }

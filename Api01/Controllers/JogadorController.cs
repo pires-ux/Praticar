@@ -20,14 +20,13 @@ namespace Api01.Controllers
         [HttpPost]
         public async Task<ActionResult<ResponseDTO>> Criar(CriarDTO criar)
         {
-            _log.LogInformation("Começar comando");
-            Console.WriteLine("começar comando");
-            
+            if(await _serv.VerificarEmail(criar.Email))
+                return BadRequest("Email já cadastrado");
             var result = await _serv.Criar(criar);
             if (result != null)
                 return Ok(result);
 
-            return BadRequest("falha ao criar jogador");
+            throw new Exception("Erro ao tentar criar conta");
         }
     }
 }

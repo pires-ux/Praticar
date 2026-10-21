@@ -22,5 +22,15 @@ namespace Api01.Service
             var result = await _repo.Criar(criar);
             return result;
         }
+
+        public Task<Jogadores> Login(LoginDTO login)
+        {
+            return _repo.Login(login);
+
+        }
+        public async Task<bool> VerificarEmail(string email)
+        { 
+            return await _repo.VerificarEmail(email);
+        }
     }
 }

@@ -5,8 +5,8 @@ namespace Api01.Repository.Interface
 {
     public interface IRepositoryJogadores
     {
-        public Task<Jogadores> Criar(CriarDTO criar);
-
-        public Task<Jogadores> Login(LoginDTO login);
+        Task<Jogadores> Criar(CriarDTO criar);
+        Task<Jogadores> Login(LoginDTO login);
+        Task<bool> VerificarEmail(string email);
     }
 }

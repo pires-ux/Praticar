@@ -1,8 +1,9 @@
-
+ 
 using Api01.Data;
 using Api01.Repository;
 using Api01.Repository.Interface;
 using Api01.Service;
+using Api01.Middleware;
 using Api01.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,7 @@ namespace Api01
 
             app.UseAuthorization();
 
+            app.UseMiddleware<LogRequisicaoMiddleware>();
 
             app.MapControllers();
 
