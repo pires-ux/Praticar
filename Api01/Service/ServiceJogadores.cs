@@ -23,9 +23,22 @@ namespace Api01.Service
             return result;
         }
 
-        public Task<Jogadores> Login(LoginDTO login)
+        public async Task<Jogadores> Login(LoginDTO login)
         {
-            return _repo.Login(login);
+            var jogador = await _repo.Login(login);
+            if(jogador == null)
+            {
+                _log.LogInformation("Login inválido");
+                return null;
+            }
+            bool igual = BCrypt.Net.BCrypt.Verify(login.Senha, jogador.Senha);
+            if(!igual)
+            {
+                _log.LogInformation("Senha inválida");
+                return null;
+            }
+            _log.LogInformation("Login realizado com sucesso");
+            return jogador;
 
         }
         public async Task<bool> VerificarEmail(string email)

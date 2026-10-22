@@ -11,6 +11,15 @@ Content-Type: Application/json
     "id": 0,
     "nome": "Adriano",
     "usuario": "Pires",
-    "email": "adriano@gmail.com",
-    "Senha": "1234 "
+    "email": "adriano15@gmail.com",
+    "Senha": "123456"
+}
+
+###
+POST {{Api01_HostAddress}}/api/Jogador/login
+Content-type: Application/json
+
+{
+    "email": "adriano15@gmail.com",
+    "senha": "123456"
 }

@@ -35,9 +35,9 @@ namespace Api01.Repository
 
         }
 
-        public Task<Jogadores> Login(LoginDTO login)
+        public async Task<Jogadores> Login(LoginDTO login)
         {
-            return null;
+            return await _db.jogadores.FirstOrDefaultAsync(c => c.Email == login.Email);
         }
 
         public Task<bool> VerificarEmail(string email)

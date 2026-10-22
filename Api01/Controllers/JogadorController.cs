@@ -20,13 +20,29 @@ namespace Api01.Controllers
         [HttpPost]
         public async Task<ActionResult<ResponseDTO>> Criar(CriarDTO criar)
         {
-            if(await _serv.VerificarEmail(criar.Email))
+            if (await _serv.VerificarEmail(criar.Email))
                 return BadRequest("Email já cadastrado");
             var result = await _serv.Criar(criar);
             if (result != null)
                 return Ok(result);
 
             throw new Exception("Erro ao tentar criar conta");
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<ResponseDTO>> Login(LoginDTO login)
+        {
+            try
+            {
+                var result = await _serv.Login(login);
+                if (result != null)
+                    return Ok(result);
+                return BadRequest("Email ou senha incorretos");
+            }
+            catch
+            {
+                throw new Exception("Erro ao fazer login");
+            }
         }
     }
 }
