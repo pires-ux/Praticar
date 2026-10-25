@@ -6,6 +6,8 @@ using Api01.Service;
 using Api01.Middleware;
 using Api01.Service.Interface;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Api01
 {
@@ -16,18 +18,35 @@ namespace Api01
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddDbContext<Banco>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Banco")));
-            
-            // Add services to the container.
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                };
+            });
+
+            builder.Services.AddAuthorization();
+            // Add services to the container.
             builder.Services.AddControllers();
+
+            builder.Services.AddScoped<JWTservice>();
 
             builder.Services.AddScoped<IServiceJogadores, ServiceJogadores>();
 
             builder.Services.AddScoped<IRepositoryJogadores, RepositoryJogadores>();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
-
             var app = builder.Build();
+
+            
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -36,6 +55,8 @@ namespace Api01
             }
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

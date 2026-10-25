@@ -7,12 +7,14 @@ namespace Api01.Service
 {
     public class ServiceJogadores: IServiceJogadores
     {
+        private readonly JWTservice _jwt;
         private readonly IRepositoryJogadores _repo;
         private readonly ILogger<ServiceJogadores> _log;
-        public ServiceJogadores(ILogger<ServiceJogadores> log, IRepositoryJogadores repo)
+        public ServiceJogadores(ILogger<ServiceJogadores> log, IRepositoryJogadores repo, JWTservice jwt)
         {
             _log = log;
             _repo = repo;
+            _jwt = jwt;
         }
 
         public async Task<Jogadores> Criar(CriarDTO criar)
@@ -23,7 +25,7 @@ namespace Api01.Service
             return result;
         }
 
-        public async Task<Jogadores> Login(LoginDTO login)
+        public async Task<ResponseDTO> Login(LoginDTO login)
         {
             var jogador = await _repo.Login(login);
             if(jogador == null)
@@ -37,13 +39,30 @@ namespace Api01.Service
                 _log.LogInformation("Senha inválida");
                 return null;
             }
+
+            var token = _jwt.GenerateToken(jogador.Id);
             _log.LogInformation("Login realizado com sucesso");
-            return jogador;
+            return new ResponseDTO
+            {
+                Usuario = jogador.Usuario,
+                Token = token
+            };
 
         }
         public async Task<bool> VerificarEmail(string email)
         { 
             return await _repo.VerificarEmail(email);
+        }
+
+        public async Task<Jogadores> Buscar(int id)
+        {
+            var jogador = await _repo.Buscar(id);
+            if (jogador == null)
+            {
+                _log.LogInformation("Jogador não encontrado");
+                return null;
+            }
+            return jogador;
         }
     }
 }

@@ -9,17 +9,24 @@ Content-Type: Application/json
 
 {
     "id": 0,
-    "nome": "Adriano",
-    "usuario": "Pires",
-    "email": "adriano15@gmail.com",
-    "Senha": "123456"
+    "nome": "Lucas",
+    "usuario": "lukinha",
+    "email": "lucas@gmail.com",
+    "Senha": "1234567"
 }
 
 ###
+# @name login
 POST {{Api01_HostAddress}}/api/Jogador/login
 Content-type: Application/json
 
 {
-    "email": "adriano15@gmail.com",
-    "senha": "123456"
+    "email": "lucas@gmail.com",
+    "senha": "1234567"
 }
+
+
+###
+GET {{Api01_HostAddress}}/api/Jogador/12
+Accept: application/json
+Authorization: Bearer {{login.response.body.$.token}}

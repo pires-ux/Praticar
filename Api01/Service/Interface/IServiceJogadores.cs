@@ -6,7 +6,8 @@ namespace Api01.Service.Interface
     public interface IServiceJogadores
     {
         Task<Jogadores> Criar(CriarDTO criar);
-        Task<Jogadores> Login(LoginDTO login);
+        Task<ResponseDTO> Login(LoginDTO login);
         Task<bool> VerificarEmail(string email);
+        Task<Jogadores> Buscar(int id);
     }
 }

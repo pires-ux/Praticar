@@ -44,5 +44,10 @@ namespace Api01.Repository
         {
             return _db.jogadores.AnyAsync(c => c.Email == email);
         }
+
+        public async Task<Jogadores> Buscar(int id)
+        {
+            return await _db.jogadores.FirstOrDefaultAsync(c => c.Id == id);
+        }
     }
 }

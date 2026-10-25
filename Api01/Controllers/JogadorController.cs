@@ -1,5 +1,7 @@
 ﻿using Api01.DTOs;
+using Api01.Models;
 using Api01.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api01.Controllers
@@ -42,6 +44,23 @@ namespace Api01.Controllers
             catch
             {
                 throw new Exception("Erro ao fazer login");
+            }
+        }
+
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Jogadores>> Buscar(int id)
+        {
+            try
+            {
+                var result = await _serv.Buscar(id);
+                if (result != null)
+                    return Ok(result);
+                return NotFound("Jogador não encontrado");
+            }
+            catch
+            {
+                throw new Exception("Erro ao buscar jogador");
             }
         }
     }

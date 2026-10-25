@@ -8,5 +8,7 @@ namespace Api01.Repository.Interface
         Task<Jogadores> Criar(CriarDTO criar);
         Task<Jogadores> Login(LoginDTO login);
         Task<bool> VerificarEmail(string email);
+        Task<Jogadores> Buscar(int id);
+
     }
 }
