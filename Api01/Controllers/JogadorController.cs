@@ -47,7 +47,7 @@ namespace Api01.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize (Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Jogadores>> Buscar(int id)
         {

@@ -18,7 +18,8 @@ namespace Api01
         {
             var claim = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, id.ToString())
+                new Claim(ClaimTypes.NameIdentifier, id.ToString()),
+                new Claim(ClaimTypes.Role, "Admin")
             };
              
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
