@@ -44,7 +44,7 @@ namespace Api01.Service
             _log.LogInformation("Login realizado com sucesso");
             return new ResponseDTO
             {
-                Usuario = jogador.Usuario,
+                Jogadores = jogador,
                 Token = token
             };
 

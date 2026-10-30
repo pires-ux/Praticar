@@ -21,12 +21,12 @@ POST {{Api01_HostAddress}}/api/Jogador/login
 Content-type: Application/json
 
 {
-    "email": "lucas@gmail.com",
-    "senha": "1234567"
+    "email": "adriano@gmail.com",
+    "senha": "123456"
 }
 
 
 ###
-GET {{Api01_HostAddress}}/api/Jogador/12
+GET {{Api01_HostAddress}}/api/Jogador/1
 Accept: application/json
 Authorization: Bearer {{login.response.body.$.token}}

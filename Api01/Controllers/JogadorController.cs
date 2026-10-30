@@ -3,6 +3,7 @@ using Api01.Models;
 using Api01.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Api01.Controllers
 {
@@ -53,6 +54,14 @@ namespace Api01.Controllers
         {
             try
             {
+                var idUsuario = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (!int.TryParse(idUsuario, out var idAutenticado))
+                    return Unauthorized();
+
+                if (idAutenticado != id)
+                    return Forbid();
+
                 var result = await _serv.Buscar(id);
                 if (result != null)
                     return Ok(result);
