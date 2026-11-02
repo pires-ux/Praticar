@@ -17,12 +17,16 @@ namespace Api01.Service
             _jwt = jwt;
         }
 
-        public async Task<Jogadores> Criar(CriarDTO criar)
+        public async Task<ResponseDTO> Criar(CriarDTO criar)
         {
             var senha = BCrypt.Net.BCrypt.HashPassword(criar.Senha);
             criar.Senha = senha;
             var result = await _repo.Criar(criar);
-            return result;
+            return new ResponseDTO
+            {
+                Jogadores = result,
+                Token = _jwt.GenerateToken(result.Id)
+            };
         }
 
         public async Task<ResponseDTO> Login(LoginDTO login)

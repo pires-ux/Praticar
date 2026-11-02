@@ -21,7 +21,7 @@ namespace Api01.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDTO>> Criar(CriarDTO criar)
+        public async Task<ActionResult<Jogadores>> Criar(CriarDTO criar)
         {
             if (await _serv.VerificarEmail(criar.Email))
                 return BadRequest("Email já cadastrado");
